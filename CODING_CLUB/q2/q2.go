@@ -20,8 +20,9 @@ func main() {
 	url2 += strconv.FormatFloat(latitude, 'f', -1, 64) + "," + strconv.FormatFloat(longitude, 'f', -1, 64)
 
 	body2 := get_request(url2)
-	country_code, timezone_id := getCountry(body2)
-	fmt.Printf("The country code is: %v and timezone id is: %v", country_code, timezone_id)
+	country_code, timezone_id := get_Country(body2)
+	fmt.Println("Country code: ", country_code)
+	fmt.Println("Timezone id: ", timezone_id)
 }
 
 func get_request(url string) []byte {
@@ -46,7 +47,7 @@ func decodeJSON(dataJSON []byte) (latitude float64, longitude float64) {
 	return
 }
 
-func getCountry(dataJSON []byte) (country_code string, timezone_id string) {
+func get_Country(dataJSON []byte) (country_code string, timezone_id string) {
 	var decodedJSON map[string]interface{}
 
 	json.Unmarshal(dataJSON, &decodedJSON)

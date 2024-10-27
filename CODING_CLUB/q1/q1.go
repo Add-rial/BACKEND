@@ -12,7 +12,8 @@ const URL = "https://api.wheretheiss.at/v1/satellites/25544"
 func main() {
 	body := get_request()
 	latitude, longitude := decodeJSON(body)
-	fmt.Printf("The latitude is: %v and longitude is: %v", latitude, longitude)
+	fmt.Println("Latitude: ", latitude)
+	fmt.Println("Longitude: ", longitude)
 }
 
 func get_request() []byte {

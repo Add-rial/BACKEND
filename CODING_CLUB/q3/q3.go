@@ -13,33 +13,29 @@ import (
 var URL string = "https://api.wheretheiss.at/v1/satellites/25544/positions?timestamps="
 
 func main() {
-	var date, time_t string
-	fmt.Println("Enter the date in DD/MM/YYYY format('/' are necessary): ")
-	fmt.Scanln(&date)
-	fmt.Println("Now enter the time in Hours:Minutes:Seconds format(':' are necessary): ")
-	fmt.Scanln(&time_t)
+	var time_entered_as_string string
+	var time_req_layout time.Time
+	var err error
 
-	unixTime := convert_time_to_unix_time(date, time_t)
+	for true {
+		fmt.Println("Enter the date and time in \"DD/MM/YYYY_Hours:Minutes:Seconds\" format")
+		fmt.Scanln(&time_entered_as_string)
+		time_entered_as_string = strings.TrimSpace(time_entered_as_string)
+		time_req_layout, err = time.Parse("02/01/2006_15:04:05", time_entered_as_string)
+		if err == nil {
+			break
+		}
+		fmt.Println("Invalid date/time format.")
+	}
+
+	unixTime := time_req_layout.Unix()
 
 	URL += strconv.FormatInt(unixTime, 10)
 
 	body := get_request()
 	latitude, longitude := decodeJSON(body)
-	fmt.Printf("The latitude = %v and longitude = %v", latitude, longitude)
-}
-
-func convert_time_to_unix_time(date string, time_t string) int64 {
-	date_spliced := strings.Split(date, "/")
-	time_spliced := strings.Split(time_t, ":")
-
-	t := time.Date(convert_string_to_int(date_spliced[2]), time.Month(convert_string_to_int(date_spliced[1])), convert_string_to_int(date_spliced[0]), convert_string_to_int(time_spliced[0]), convert_string_to_int(time_spliced[1]), convert_string_to_int(time_spliced[2]), 0, time.UTC)
-	converted_time := t.Unix()
-	return converted_time
-}
-
-func convert_string_to_int(s string) (integer int) {
-	integer, _ = strconv.Atoi(s)
-	return
+	fmt.Println("Latitude: ", latitude)
+	fmt.Println("Longitude: ", longitude)
 }
 
 func get_request() []byte {
