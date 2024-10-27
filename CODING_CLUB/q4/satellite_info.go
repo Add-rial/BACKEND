@@ -19,8 +19,8 @@ var url_time_lat_long string = "https://api.wheretheiss.at/v1/satellites/25544/p
 func main() {
 	//Directory open in vscode is GO
 	lat_long := flag.Bool("lat_long", false, "Get current ISS location in latitude and longitude\nExample :go run satellite_info.go -lat_long")
-	country_timezone := flag.Bool("country_timezone", false, "Get current ISS location as country code and time zone\ngo run satellite_info.go -country_timezone")
-	lat_long_time := flag.String("lat_long_time", "", "Get ISS location at a specific date/time (format: \"DD/MM/YYYY_HH:MM:SS\")\ngo run satellite_info.go -lat_long_time \"26/10/2024_14:30:00\"")
+	country_timezone := flag.Bool("country_timezone", false, "Get current ISS location as country code and time zone\nExample :go run satellite_info.go -country_timezone")
+	lat_long_time := flag.String("lat_long_time", "", "Get ISS location at a specific date/time (format: \"DD/MM/YYYY_HH:MM:SS\")\nExample :go run satellite_info.go -lat_long_time \"26/10/2024_14:30:00\"")
 
 	flag.Parse()
 
